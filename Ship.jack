@@ -1,0 +1,91 @@
+class Ship {
+    field int x, y;
+
+    constructor Ship new(int Ax, int Ay) {
+        let x = Ax;
+        let y = Ay;
+        do draw();
+        return this;
+    }
+
+    method int getX() {
+        return x;
+    }
+
+    method int getY() {
+        return y;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void draw(int location) {
+        var int memAddress; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress, 32);
+        do Memory.poke(memAddress +32, 112);
+        do Memory.poke(memAddress +64, 80);
+        do Memory.poke(memAddress +96, 1105);
+        do Memory.poke(memAddress +128, 1651);
+        do Memory.poke(memAddress +160, 1533);
+        do Memory.poke(memAddress +192, 1533);
+        do Memory.poke(memAddress +224, 1911);
+        do Memory.poke(memAddress +256, 546);
+        return;
+    }
+
+    method void erase() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress, 0);
+        do Memory.poke(memAddress +32, 0);
+        do Memory.poke(memAddress +64, 0);
+        do Memory.poke(memAddress +96, 0);
+        do Memory.poke(memAddress +128, 0);
+        do Memory.poke(memAddress +160, 0);
+        do Memory.poke(memAddress +192, 0);
+        do Memory.poke(memAddress +224, 0);
+        do Memory.poke(memAddress +256, 0);
+        return;
+    }
+
+    method void moveLeft() {
+        if (x > 1) {
+            do erase();
+            let x = x - 2;
+            do draw();
+        }
+        return;
+    }
+
+    method void moveRight() {
+        if (x < 510) {
+            do erase();
+            let x = x + 2;
+            do draw();
+        }
+        return;
+    }
+
+    method void moveDown() {
+        if (y < 231) {
+            do erase();
+            let y = y + 2;
+            do draw();
+        }
+        return;
+    }
+
+    method void moveUp() {
+        if (y > 1) {
+            do erase();
+            let y = y - 2;
+            do draw();
+        }
+        return;
+    }
+
+}

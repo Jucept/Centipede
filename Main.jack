@@ -1,0 +1,12 @@
+class Main {
+
+    function void main() {
+        var CentipedeGame game;
+
+        let game = CentipedeGame.new();
+        do game.run();
+	    do game.dispose();
+
+        return;
+    }
+}

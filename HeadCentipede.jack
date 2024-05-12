@@ -1,0 +1,18 @@
+function void CabezaSprite(int location) {
+	var int memAddress; 
+	let memAddress = 16384+location;
+	// column 0
+	do Memory.poke(memAddress, 504);
+	do Memory.poke(memAddress +32, 516);
+	do Memory.poke(memAddress +64, 1026);
+	do Memory.poke(memAddress +96, 2433);
+	do Memory.poke(memAddress +128, 2817);
+	do Memory.poke(memAddress +160, 4097);
+	do Memory.poke(memAddress +192, 4097);
+	do Memory.poke(memAddress +224, 2817);
+	do Memory.poke(memAddress +256, 2433);
+	do Memory.poke(memAddress +288, 1026);
+	do Memory.poke(memAddress +320, 516);
+	do Memory.poke(memAddress +352, 504);
+	return;
+}
