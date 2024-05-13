@@ -1,9 +1,9 @@
 class Main {
 
     function void main() {
-        var CentipedeGame game;
+        var GameCentipede game;
 
-        let game = CentipedeGame.new();
+        let game = GameCentipede.new();
         do game.run();
 	    do game.dispose();
 
