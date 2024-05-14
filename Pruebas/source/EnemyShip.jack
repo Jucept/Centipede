@@ -1,0 +1,128 @@
+/*
+EnemyShip - one enemy ship, with animation, floating, etc.
+ */
+class EnemyShip {
+    field boolean isAlive; // is in game
+    field boolean death; // in exploding state
+    field int x, y;
+    field boolean toRight; // float enemy ship to the left, or to the right if false :-)
+    field int offset; // offset to the left or to the right
+    field Block block;
+
+    constructor EnemyShip new() {
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** mark as active, i.e. enemy ship is in game **/
+    method void activate(int Ax, int Ay) {
+        let isAlive = true;
+        let death = false;
+        let x = Ax;
+        let y = Ay;
+        let toRight = true; // start moving to the right
+        let offset = 0;
+        return;
+    }
+
+    /** disable **/
+    method void deactivate() {
+        let isAlive = false;
+        let death = false;
+        do erase();
+        return;
+    }
+
+    /** getters **/
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method boolean isAlive() { return isAlive; }
+
+    /** trigger explosion animation **/
+    method void die() {
+    do erase();
+	// do block.draw(x, y); // Dibujar bloque al morir
+    let isAlive = false;
+        return;
+    }
+
+    /** render enemy ship **/
+    method void draw() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        // column 0
+        do Memory.poke(memAddress, 504);
+        do Memory.poke(memAddress +32, 516);
+        do Memory.poke(memAddress +64, 1026);
+        do Memory.poke(memAddress +96, 2289);
+        do Memory.poke(memAddress +128, 2313);
+        do Memory.poke(memAddress +160, 2313);
+        do Memory.poke(memAddress +192, 2313);
+        do Memory.poke(memAddress +224, 2313);
+        do Memory.poke(memAddress +256, 2289);
+        do Memory.poke(memAddress +288, 1026);
+        do Memory.poke(memAddress +320, 516);
+        do Memory.poke(memAddress +352, 504);
+        return;
+    }
+
+    /** render white pixels on top of enemy ship, effectively erasing it **/
+    method void erase() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        // column 0
+        do Memory.poke(memAddress, 0);
+        do Memory.poke(memAddress +32, 0);
+        do Memory.poke(memAddress +64, 0);
+        do Memory.poke(memAddress +96, 0);
+        do Memory.poke(memAddress +128, 0);
+        do Memory.poke(memAddress +160, 0);
+        do Memory.poke(memAddress +192, 0);
+        do Memory.poke(memAddress +224, 0);
+        do Memory.poke(memAddress +256, 0);
+        do Memory.poke(memAddress +288, 0);
+        do Memory.poke(memAddress +320, 0);
+        do Memory.poke(memAddress +352, 0);
+        return;
+    }
+
+    /** move enemy ship down, swaying it sideways, to the left or to the right **/
+    method void move() {
+        if (y < 231) {
+            do erase(); // clear
+            if (toRight) { // if moving to the right
+                if (x < 505) { // move further to the right
+                    let x = x + 25;
+                } else { // switch direction and move down
+                    let toRight = false;
+                    let y = y + 20;
+                }
+            } else { // if moving to the left
+                if (x > 5) { // move further to the left
+                    let x = x - 25;
+                } else { // switch direction and move down
+                    let toRight = true;
+                    let y = y + 20;
+                }
+            }
+            do draw();
+        }
+        return;
+    }
+
+    /** perform whatever is necessary in current state, gets called from programs mainloop **/
+    method void run() {
+        if (~isAlive) { return; }
+        if (~death) { // if active and not exploding, render floating animation
+            do move();
+        }
+        else { // otherwise if active and exploding, die
+            do die();
+        }
+        return;
+    }
+}
