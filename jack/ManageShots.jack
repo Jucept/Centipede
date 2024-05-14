@@ -1,6 +1,6 @@
 /*
-ManageShots - class that allows to fire up to sixteen shots.
-By default all shots are inactive and wait in a "pool".
+ManageShots - class that allows to fire up to sixteen Shot.
+By default all Shot are inactive and wait in a "pool".
 When player fires a shot, first inactive shot from a pool
 becomes active, its coords are set to player's coords
 and animation of a projectile begins.
@@ -11,51 +11,33 @@ There's also code to check for shot's collision with enemies.
 
 Collision detection code is tricky:
 1. a method handleEnemyDown is called, it accepts enemies set
-2. then, a method checkIfHit is called on enemies set, all shots are passed there as argument
+2. then, a method checkIfHit is called on enemies set, all Shot are passed there as argument
 3. checkIfHit calls method handleOneEnemyDown of this class for all enemies in a set
 4. handleOneEnemyDown checks one particular buller with one particular enemy for collision
 
-In this tricky call chain we have O(shots*enemies) checks, comparing every shot
+In this tricky call chain we have O(Shot*enemies) checks, comparing every shot
 with every enemy ship.
  */
 class ManageShots {
-    /* pool of 16 shots */
     field Shot shot01;
-    field Shot shot02;
-    field Shot shot03;
-    field Shot shot04;
-    field Shot shot05;
-
 
     constructor ManageShots new() {
         let shot01 = Shot.new();
-        let shot02 = Shot.new();
-        let shot03 = Shot.new();
-        let shot04 = Shot.new();
-        let shot05 = Shot.new();
         return this;
     }
 
     method void dispose() {
         do shot01.dispose();
-        do shot02.dispose();
-        do shot03.dispose();
-        do shot04.dispose();
-        do shot05.dispose();
         do Memory.deAlloc(this);
         return;
     }
 
-    method void run(EnemySet e) {
+    method void run(ManageCentipede e) {
         /* gets called from programs mainloop.
            Makes each shot fly if necessary,
            also checks for collisions */
         do shot01.run();
-        do shot02.run();
-        do shot03.run();
-        do shot04.run();
-        do shot05.run();
-        do handleEnemyDown(e);
+        do handlePartDown(e);
         return;
     }
 
@@ -65,20 +47,12 @@ class ManageShots {
            to launch it */
         if (~shot01.getActive()) {
             do shot01.fire(x, y);
-        } else { if (~shot02.getActive()) {
-            do shot02.fire(x, y);
-        } else { if (~shot03.getActive()) {
-            do shot03.fire(x, y);
-        } else { if (~shot04.getActive()) {
-            do shot04.fire(x, y);
-        } else { if (~shot05.getActive()) {
-            do shot05.fire(x, y);
-        }}}}}
+        } 
         return;
     }
 
     /** checks collision between a shot and an enemy ship **/
-    method boolean isEnemyDown(Shot b, EnemyShip e) {
+    method boolean isPartDown(Shot b, Centipede e) {
         var int bx, by, ex, ey;
         if (~b.getActive()) { return false; }
         if (~e.isAlive()) { return false; }
@@ -98,31 +72,23 @@ class ManageShots {
     }
 
     /** kill an enemy ship with a shot **/
-    method void kill(Shot b, EnemyShip e) {
-        do e.explode(); // start explosion animation, mark enemy as inactive, etc
+    method void kill(Shot b, Centipede e) {
+        do e.die(); // start explosion animation, mark enemy as inactive, etc
         do b.deactivate(); // disable shot, its job is done
         return;
     }
 
-    /** check all enemies for collision with all shots **/
-    method void handleEnemyDown(EnemySet enemies) {
-        do enemies.checkIfHit(this);
+    /** check all enemies for collision with all Shot **/
+    method void handlePartDown(ManageCentipede parts) {
+        do parts.checkIfHit(this);
         return;
     }
 
-    /** checks one enemy ship for collision with all shots **/
-    method void handleOneEnemyDown(EnemyShip enemy) {
-        if (isEnemyDown(shot01, enemy)) {
-            do kill(shot01, enemy);
-        } else { if (isEnemyDown(shot02, enemy)) {
-            do kill(shot02, enemy);
-        } else { if (isEnemyDown(shot03, enemy)) {
-            do kill(shot03, enemy);
-        } else { if (isEnemyDown(shot04, enemy)) {
-            do kill(shot04, enemy);
-        } else { if (isEnemyDown(shot05, enemy)) {
-            do kill(shot05, enemy);
-        }}}}}
+    /** checks one enemy ship for collision with all Shot **/
+    method void handleOnePartDown(Centipede part) {
+        if (isPartDown(shot01, part)) {
+            do kill(shot01, part);
+        } 
         return;
     }
 }

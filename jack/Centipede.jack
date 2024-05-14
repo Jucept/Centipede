@@ -1,7 +1,7 @@
 /*
-EnemyShip - one enemy ship, with animation, floating, etc.
+Centipede - one enemy ship, with animation, floating, etc.
  */
-class EnemyShip {
+class Centipede {
     field boolean isAlive; // is in game
     field boolean death; // in exploding state
     field int x, y;
@@ -9,7 +9,7 @@ class EnemyShip {
     field int offset; // offset to the left or to the right
     field Block block;
 
-    constructor EnemyShip new() {
+    constructor Centipede new() {
         return this;
     }
 
@@ -42,11 +42,11 @@ class EnemyShip {
     method int getY() { return y; }
     method boolean isAlive() { return isAlive; }
 
-    /** trigger explosion animation **/
+    /** block **/
     method void die() {
-    do erase();
-	// do block.draw(x, y); // Dibujar bloque al morir
-    let isAlive = false;
+        do erase();
+        do block.draw(x, y); // Dibujar bloque al morir
+        let isAlive = false;
         return;
     }
 

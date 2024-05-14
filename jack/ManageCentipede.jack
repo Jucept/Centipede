@@ -1,0 +1,118 @@
+/*
+ManageCentipede - a collection of part ships with some helpful functions.
+ */
+class ManageCentipede {
+    /* pool of part ships */
+    field Centipede part01;
+    field Centipede part02;
+    field Centipede part03;
+    field Centipede part04;
+    field Centipede part05;
+    field Centipede part06;
+    field Centipede part07;
+    field Centipede part08;
+
+    constructor ManageCentipede new() {
+        let part01 = Centipede.new();
+        let part02 = Centipede.new();
+        let part03 = Centipede.new();
+        let part04 = Centipede.new();
+        let part05 = Centipede.new();
+        let part06 = Centipede.new();
+        let part07 = Centipede.new();
+        let part08 = Centipede.new();
+        return this;
+    }
+
+    /** return true if any part ship reached the bottom of the screen **/
+    method boolean reachedEnd() {
+        if (partReachedEnd(part01)) {
+            return true;
+        } else { if (partReachedEnd(part02)) {
+            return true;
+        } else { if (partReachedEnd(part03)) {
+            return true;
+        } else { if (partReachedEnd(part04)) {
+            return true;
+        } else { if (partReachedEnd(part05)) {
+            return true;
+        } else { if (partReachedEnd(part06)) {
+            return true;
+        } else { if (partReachedEnd(part07)) {
+            return true;
+        } else { if (partReachedEnd(part08)) {
+            return true;
+        }}}}}}}}
+        return false;
+    }
+
+    /** returns true if at least one part is alive **/
+    method boolean anyAlivePart() {
+        if (part01.isAlive()) { return true; }
+        if (part02.isAlive()) { return true; }
+        if (part03.isAlive()) { return true; }
+        if (part04.isAlive()) { return true; }
+        if (part05.isAlive()) { return true; }
+        if (part06.isAlive()) { return true; }
+        if (part07.isAlive()) { return true; }
+        if (part08.isAlive()) { return true; }
+        return false;
+    }
+
+    /** check if a particular part ship reached the bottom of the screen **/
+    method boolean partReachedEnd(Centipede e) {
+        return (e.getY() > 229);
+    }
+
+    /** try to find collisions with bullets for each part ship **/
+    method void checkIfHit(ManageShots bs) {
+        do bs.handleOnePartDown(part01);
+        do bs.handleOnePartDown(part02);
+        do bs.handleOnePartDown(part03);
+        do bs.handleOnePartDown(part04);
+        do bs.handleOnePartDown(part05);
+        do bs.handleOnePartDown(part06);
+        do bs.handleOnePartDown(part07);
+        do bs.handleOnePartDown(part08);
+        return;
+    }
+
+    /** spawn enemies on screen **/
+    method void activate() {
+        do part01.activate(35, 20);
+        do part02.activate(75, 20);
+        do part03.activate(115, 20);
+        do part04.activate(155, 20);
+        do part05.activate(195, 20);
+        do part06.activate(235, 20);
+        do part07.activate(275, 20);
+        do part08.activate(315, 20);
+        return;
+    }
+
+    method void dispose() {
+        do part01.dispose();
+        do part02.dispose();
+        do part03.dispose();
+        do part04.dispose();
+        do part05.dispose();
+        do part06.dispose();
+        do part07.dispose();
+        do part08.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** called from mainloop, does whatever is necessary for part ships in current state **/
+    method void run() {
+        do part01.run();
+        do part02.run();
+        do part03.run();
+        do part04.run();
+        do part05.run();
+        do part06.run();
+        do part07.run();
+        do part08.run();
+        return;
+    }
+}

@@ -1,7 +1,7 @@
-class PlayersJet {
+class Ship {
     field int x, y;
 
-    constructor PlayersJet new(int Ax, int Ay) {
+    constructor Ship new(int Ax, int Ay) {
         let x = Ax;
         let y = Ay;
         do draw();
@@ -71,7 +71,7 @@ class PlayersJet {
     }
 
     method void moveDown() {
-        if (y < 231) {
+        if (y < 245) {
             do erase();
             let y = y + 2;
             do draw();
@@ -80,7 +80,7 @@ class PlayersJet {
     }
 
     method void moveUp() {
-        if (y > 1) {
+        if (y > 170) {
             do erase();
             let y = y - 2;
             do draw();

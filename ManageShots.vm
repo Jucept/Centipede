@@ -1,39 +1,39 @@
-function BulletSet.new 0
+function ManageShots.new 0
 push constant 1
 call Memory.alloc 1
 pop pointer 0
-call Bullet.new 0
+call Shot.new 0
 pop this 0
 push pointer 0
 return
-function BulletSet.dispose 0
+function ManageShots.dispose 0
 push argument 0
 pop pointer 0
 push this 0
-call Bullet.dispose 1
+call Shot.dispose 1
 pop temp 0
 push pointer 0
 call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return
-function BulletSet.run 0
+function ManageShots.run 0
 push argument 0
 pop pointer 0
 push this 0
-call Bullet.run 1
+call Shot.run 1
 pop temp 0
 push pointer 0
 push argument 1
-call BulletSet.handleEnemyDown 2
+call ManageShots.handlePartDown 2
 pop temp 0
 push constant 0
 return
-function BulletSet.fire 0
+function ManageShots.fire 0
 push argument 0
 pop pointer 0
 push this 0
-call Bullet.getActive 1
+call Shot.getActive 1
 not
 if-goto IF_TRUE0
 goto IF_FALSE0
@@ -41,16 +41,16 @@ label IF_TRUE0
 push this 0
 push argument 1
 push argument 2
-call Bullet.fire 3
+call Shot.fire 3
 pop temp 0
 label IF_FALSE0
 push constant 0
 return
-function BulletSet.isEnemyDown 4
+function ManageShots.isPartDown 4
 push argument 0
 pop pointer 0
 push argument 1
-call Bullet.getActive 1
+call Shot.getActive 1
 not
 if-goto IF_TRUE0
 goto IF_FALSE0
@@ -59,7 +59,7 @@ push constant 0
 return
 label IF_FALSE0
 push argument 2
-call EnemyShip.isAlive 1
+call Centipede.isAlive 1
 not
 if-goto IF_TRUE1
 goto IF_FALSE1
@@ -68,16 +68,16 @@ push constant 0
 return
 label IF_FALSE1
 push argument 1
-call Bullet.getX 1
+call Shot.getX 1
 pop local 0
 push argument 1
-call Bullet.getY 1
+call Shot.getY 1
 pop local 1
 push argument 2
-call EnemyShip.getX 1
+call Centipede.getX 1
 pop local 2
 push argument 2
-call EnemyShip.getY 1
+call Centipede.getY 1
 pop local 3
 push local 1
 push local 3
@@ -109,40 +109,40 @@ label IF_FALSE3
 label IF_FALSE2
 push constant 0
 return
-function BulletSet.kill 0
+function ManageShots.kill 0
 push argument 0
 pop pointer 0
 push argument 2
-call EnemyShip.die 1
+call Centipede.die 1
 pop temp 0
 push argument 1
-call Bullet.deactivate 1
+call Shot.deactivate 1
 pop temp 0
 push constant 0
 return
-function BulletSet.handleEnemyDown 0
+function ManageShots.handlePartDown 0
 push argument 0
 pop pointer 0
 push argument 1
 push pointer 0
-call EnemySet.checkIfHit 2
+call ManageCentipede.checkIfHit 2
 pop temp 0
 push constant 0
 return
-function BulletSet.handleOneEnemyDown 0
+function ManageShots.handleOnePartDown 0
 push argument 0
 pop pointer 0
 push pointer 0
 push this 0
 push argument 1
-call BulletSet.isEnemyDown 3
+call ManageShots.isPartDown 3
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push pointer 0
 push this 0
 push argument 1
-call BulletSet.kill 3
+call ManageShots.kill 3
 pop temp 0
 label IF_FALSE0
 push constant 0

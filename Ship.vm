@@ -1,4 +1,4 @@
-function PlayersJet.new 0
+function Ship.new 0
 push constant 2
 call Memory.alloc 1
 pop pointer 0
@@ -7,21 +7,21 @@ pop this 0
 push argument 1
 pop this 1
 push pointer 0
-call PlayersJet.draw 1
+call Ship.draw 1
 pop temp 0
 push pointer 0
 return
-function PlayersJet.getX 0
+function Ship.getX 0
 push argument 0
 pop pointer 0
 push this 0
 return
-function PlayersJet.getY 0
+function Ship.getY 0
 push argument 0
 pop pointer 0
 push this 1
 return
-function PlayersJet.dispose 0
+function Ship.dispose 0
 push argument 0
 pop pointer 0
 push pointer 0
@@ -29,7 +29,7 @@ call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return
-function PlayersJet.draw 1
+function Ship.draw 1
 push argument 0
 pop pointer 0
 push constant 16384
@@ -96,7 +96,7 @@ call Memory.poke 2
 pop temp 0
 push constant 0
 return
-function PlayersJet.erase 1
+function Ship.erase 1
 push argument 0
 pop pointer 0
 push constant 16384
@@ -163,7 +163,7 @@ call Memory.poke 2
 pop temp 0
 push constant 0
 return
-function PlayersJet.moveLeft 0
+function Ship.moveLeft 0
 push argument 0
 pop pointer 0
 push this 0
@@ -173,19 +173,19 @@ if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push pointer 0
-call PlayersJet.erase 1
+call Ship.erase 1
 pop temp 0
 push this 0
 push constant 2
 sub
 pop this 0
 push pointer 0
-call PlayersJet.draw 1
+call Ship.draw 1
 pop temp 0
 label IF_FALSE0
 push constant 0
 return
-function PlayersJet.moveRight 0
+function Ship.moveRight 0
 push argument 0
 pop pointer 0
 push this 0
@@ -195,58 +195,58 @@ if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push pointer 0
-call PlayersJet.erase 1
+call Ship.erase 1
 pop temp 0
 push this 0
 push constant 2
 add
 pop this 0
 push pointer 0
-call PlayersJet.draw 1
+call Ship.draw 1
 pop temp 0
 label IF_FALSE0
 push constant 0
 return
-function PlayersJet.moveDown 0
+function Ship.moveDown 0
 push argument 0
 pop pointer 0
 push this 1
-push constant 231
+push constant 245
 lt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push pointer 0
-call PlayersJet.erase 1
+call Ship.erase 1
 pop temp 0
 push this 1
 push constant 2
 add
 pop this 1
 push pointer 0
-call PlayersJet.draw 1
+call Ship.draw 1
 pop temp 0
 label IF_FALSE0
 push constant 0
 return
-function PlayersJet.moveUp 0
+function Ship.moveUp 0
 push argument 0
 pop pointer 0
 push this 1
-push constant 1
+push constant 170
 gt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push pointer 0
-call PlayersJet.erase 1
+call Ship.erase 1
 pop temp 0
 push this 1
 push constant 2
 sub
 pop this 1
 push pointer 0
-call PlayersJet.draw 1
+call Ship.draw 1
 pop temp 0
 label IF_FALSE0
 push constant 0

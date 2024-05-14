@@ -1,0 +1,73 @@
+/**
+ * Block - a block that appears after the enemy ship destroys.
+ */
+class Block {
+    field int x, y; // coordinates of the block
+    field boolean isVisible; // visibility status of the block
+
+    // Constructor
+    constructor Block new() {
+        let isVisible = false;
+        return this;
+    }
+
+    /** Activate the block at given coordinates **/
+    method void activate(int Ax, int Ay) {
+        let x = Ax;
+        let y = Ay;
+        let isVisible = true;
+        do draw(x, y);
+        return;
+    }
+
+    /** Deactivate the block **/
+    method void deactivate(int Ax, int Ay) {
+        let x = Ax;
+        let y = Ay;
+        let isVisible = false;
+        do erase(x, y);
+        return;
+    }
+
+    /** Draw the block **/
+    method void draw(int x, int y) {
+        var int memAddress;
+        let memAddress = 16384 + (x / 16) + (y * 32);
+        // column 0
+        do Memory.poke(memAddress, 4095);
+        do Memory.poke(memAddress +32, 4065);
+        do Memory.poke(memAddress +64, 4081);
+        do Memory.poke(memAddress +96, 4093);
+        do Memory.poke(memAddress +128, 4095);
+        do Memory.poke(memAddress +160, 4095);
+        do Memory.poke(memAddress +192, 4095);
+        do Memory.poke(memAddress +224, 1012);
+        do Memory.poke(memAddress +256, 1012);
+        do Memory.poke(memAddress +288, 1012);
+        do Memory.poke(memAddress +320, 1020);
+        do Memory.poke(memAddress +352, 1020);
+        return;
+    }
+
+    /** Erase the block **/
+    method void erase(int x, int y) {
+
+        var int memAddress;
+        let memAddress = 16384 + (x / 16) + (y * 32);
+        // column 0
+        do Memory.poke(memAddress, 0);
+        do Memory.poke(memAddress +32, 0);
+        do Memory.poke(memAddress +64, 0);
+        do Memory.poke(memAddress +96, 0);
+        do Memory.poke(memAddress +128, 0);
+        do Memory.poke(memAddress +160, 0);
+        do Memory.poke(memAddress +192, 0);
+        do Memory.poke(memAddress +224, 0);
+        do Memory.poke(memAddress +256, 0);
+        do Memory.poke(memAddress +288, 0);
+        do Memory.poke(memAddress +320, 0);
+        do Memory.poke(memAddress +352, 0);
+        return;
+    }
+
+}

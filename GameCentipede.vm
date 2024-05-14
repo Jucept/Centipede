@@ -1,77 +1,77 @@
-function GalaxyGame.new 0
+function GameCentipede.new 0
 push constant 6
 call Memory.alloc 1
 pop pointer 0
 push constant 248
 push constant 230
-call PlayersJet.new 2
+call Ship.new 2
 pop this 0
 push constant 0
 pop this 3
-call BulletSet.new 0
+call ManageShots.new 0
 pop this 1
-call EnemySet.new 0
+call ManageCentipede.new 0
 pop this 2
 push this 2
-call EnemySet.activate 1
+call ManageCentipede.activate 1
 pop temp 0
 push pointer 0
 return
-function GalaxyGame.dispose 0
+function GameCentipede.dispose 0
 push argument 0
 pop pointer 0
 push this 0
-call PlayersJet.dispose 1
+call Ship.dispose 1
 pop temp 0
 push this 1
-call BulletSet.dispose 1
+call ManageShots.dispose 1
 pop temp 0
 push pointer 0
 call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return
-function GalaxyGame.movePlayer 0
+function GameCentipede.moveship 0
 push argument 0
 pop pointer 0
 push this 3
-push constant 3
+push constant 1
 eq
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push this 0
-call PlayersJet.moveLeft 1
+call Ship.moveUp 1
 pop temp 0
 label IF_FALSE0
 push this 3
-push constant 4
+push constant 2
 eq
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push this 0
-call PlayersJet.moveRight 1
+call Ship.moveDown 1
 pop temp 0
 label IF_FALSE1
 push this 3
-push constant 1
+push constant 3
 eq
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
 push this 0
-call PlayersJet.moveUp 1
+call Ship.moveLeft 1
 pop temp 0
 label IF_FALSE2
 push this 3
-push constant 2
+push constant 4
 eq
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
 push this 0
-call PlayersJet.moveDown 1
+call Ship.moveRight 1
 pop temp 0
 label IF_FALSE3
 push this 3
@@ -85,7 +85,7 @@ pop this 3
 label IF_FALSE4
 push constant 0
 return
-function GalaxyGame.endGame 0
+function GameCentipede.endGame 0
 push argument 0
 pop pointer 0
 push constant 10
@@ -97,7 +97,7 @@ call Output.printString 1
 pop temp 0
 push constant 0
 return
-function GalaxyGame.run 2
+function GameCentipede.run 2
 push argument 0
 pop pointer 0
 push constant 0
@@ -143,12 +143,12 @@ goto IF_FALSE3
 label IF_TRUE3
 push this 1
 push this 0
-call PlayersJet.getX 1
+call Ship.getX 1
 push this 0
-call PlayersJet.getY 1
+call Ship.getY 1
 push constant 16
 sub
-call BulletSet.fire 3
+call ManageShots.fire 3
 pop temp 0
 label IF_FALSE3
 push this 4
@@ -158,39 +158,39 @@ pop this 4
 label IF_END2
 label IF_FALSE1
 push local 0
-push constant 130
+push constant 131
 eq
 if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
-push constant 3
+push constant 1
 pop this 3
 label IF_FALSE4
 push local 0
-push constant 132
+push constant 133
 eq
 if-goto IF_TRUE5
 goto IF_FALSE5
 label IF_TRUE5
-push constant 4
+push constant 2
 pop this 3
 label IF_FALSE5
 push local 0
-push constant 131
+push constant 130
 eq
 if-goto IF_TRUE6
 goto IF_FALSE6
 label IF_TRUE6
-push constant 1
+push constant 3
 pop this 3
 label IF_FALSE6
 push local 0
-push constant 133
+push constant 132
 eq
 if-goto IF_TRUE7
 goto IF_FALSE7
 label IF_TRUE7
-push constant 2
+push constant 4
 pop this 3
 label IF_FALSE7
 push this 5
@@ -210,7 +210,7 @@ if-goto IF_TRUE9
 goto IF_FALSE9
 label IF_TRUE9
 push this 2
-call EnemySet.run 1
+call ManageCentipede.run 1
 pop temp 0
 label IF_FALSE9
 push this 5
@@ -219,14 +219,14 @@ add
 pop this 5
 label IF_END8
 push pointer 0
-call GalaxyGame.movePlayer 1
+call GameCentipede.moveship 1
 pop temp 0
 push this 1
 push this 2
-call BulletSet.run 2
+call ManageShots.run 2
 pop temp 0
 push this 2
-call EnemySet.anyAliveEnemy 1
+call ManageCentipede.anyAlivePart 1
 not
 if-goto IF_TRUE10
 goto IF_FALSE10
@@ -248,7 +248,7 @@ push constant 73
 call String.appendChar 2
 push constant 78
 call String.appendChar 2
-call GalaxyGame.endGame 2
+call GameCentipede.endGame 2
 pop temp 0
 push constant 0
 not
@@ -256,7 +256,7 @@ pop local 1
 goto IF_END10
 label IF_FALSE10
 push this 2
-call EnemySet.reachedEnd 1
+call ManageCentipede.reachedEnd 1
 if-goto IF_TRUE11
 goto IF_FALSE11
 label IF_TRUE11
@@ -281,7 +281,7 @@ push constant 69
 call String.appendChar 2
 push constant 82
 call String.appendChar 2
-call GalaxyGame.endGame 2
+call GameCentipede.endGame 2
 pop temp 0
 push constant 0
 not

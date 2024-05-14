@@ -1,0 +1,210 @@
+function Shot.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 0
+push constant 0
+pop this 1
+push pointer 0
+return
+function Shot.setXY 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 0
+push argument 2
+pop this 1
+push constant 0
+return
+function Shot.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Shot.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Shot.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Shot.getActive 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Shot.draw 1
+push argument 0
+pop pointer 0
+push constant 16384
+push this 0
+push constant 16
+call Math.divide 2
+add
+push this 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push local 0
+push constant 3
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 3
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 3
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 3
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 3
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Shot.erase 1
+push argument 0
+pop pointer 0
+push constant 16384
+push this 0
+push constant 16
+call Math.divide 2
+add
+push this 1
+push constant 32
+call Math.multiply 2
+add
+pop local 0
+push local 0
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Shot.fire 0
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+push argument 2
+call Shot.setXY 3
+pop temp 0
+push pointer 0
+call Shot.activate 1
+pop temp 0
+push constant 0
+return
+function Shot.run 0
+push argument 0
+pop pointer 0
+push this 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Shot.moveUp 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Shot.activate 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop this 2
+push pointer 0
+call Shot.moveUp 1
+pop temp 0
+push constant 0
+return
+function Shot.deactivate 0
+push argument 0
+pop pointer 0
+push constant 0
+pop this 2
+push pointer 0
+call Shot.erase 1
+pop temp 0
+push constant 0
+return
+function Shot.moveUp 0
+push argument 0
+pop pointer 0
+push this 2
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push this 1
+push constant 1
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+call Shot.erase 1
+pop temp 0
+push this 1
+push constant 3
+sub
+pop this 1
+push pointer 0
+call Shot.draw 1
+pop temp 0
+goto IF_END1
+label IF_FALSE1
+push pointer 0
+call Shot.deactivate 1
+pop temp 0
+label IF_END1
+push constant 0
+return
