@@ -1,13 +1,14 @@
 /*
-Centipede - one enemy ship, with animation, floating, etc.
+Centipede 
  */
 class Centipede {
     field boolean isAlive; // is in game
-    field boolean death; // in exploding state
+    field boolean death; 
     field int x, y;
-    field boolean toRight; // float enemy ship to the left, or to the right if false :-)
+    field boolean toRight;
     field int offset; // offset to the left or to the right
     field Block block;
+    field boolean animate;
 
     constructor Centipede new() {
         return this;
@@ -15,13 +16,14 @@ class Centipede {
 
     method void dispose() {
         do Memory.deAlloc(this);
+        do block.dispose();
         return;
     }
 
-    /** mark as active, i.e. enemy ship is in game **/
     method void activate(int Ax, int Ay) {
         let isAlive = true;
         let death = false;
+        let animate = false;
         let x = Ax;
         let y = Ay;
         let toRight = true; // start moving to the right
@@ -45,28 +47,58 @@ class Centipede {
     /** block **/
     method void die() {
         do erase();
-        do block.draw(x, y); // Dibujar bloque al morir
+        do block.draw(x,y); // Dibujar bloque al morir
         let isAlive = false;
         return;
     }
 
-    /** render enemy ship **/
-    method void draw() {
+    /** render animation 1 **/
+    method void draw1() {
         var int memAddress;
         let memAddress = 16384 + (x/16) + (y*32);
         // column 0
-        do Memory.poke(memAddress, 504);
-        do Memory.poke(memAddress +32, 516);
-        do Memory.poke(memAddress +64, 1026);
-        do Memory.poke(memAddress +96, 2289);
-        do Memory.poke(memAddress +128, 2313);
-        do Memory.poke(memAddress +160, 2313);
-        do Memory.poke(memAddress +192, 2313);
-        do Memory.poke(memAddress +224, 2313);
-        do Memory.poke(memAddress +256, 2289);
-        do Memory.poke(memAddress +288, 1026);
-        do Memory.poke(memAddress +320, 516);
-        do Memory.poke(memAddress +352, 504);
+        do Memory.poke(memAddress, 524);
+        do Memory.poke(memAddress +32, 2320);
+        do Memory.poke(memAddress +64, 1302);
+        do Memory.poke(memAddress +96, 1268);
+        do Memory.poke(memAddress +128, 924);
+        do Memory.poke(memAddress +160, 6661);
+        do Memory.poke(memAddress +192, 1542);
+        do Memory.poke(memAddress +224, 1026);
+        do Memory.poke(memAddress +256, 1026);
+        do Memory.poke(memAddress +288, 1542);
+        do Memory.poke(memAddress +320, 6661);
+        do Memory.poke(memAddress +352, 924);
+        do Memory.poke(memAddress +384, 1268);
+        do Memory.poke(memAddress +416, 1302);
+        do Memory.poke(memAddress +448, 2320);
+        do Memory.poke(memAddress +480, 524);
+        let animate = true;
+        return;
+    }
+
+    /** render animation 2 **/
+    method void draw2() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        // column 0
+        do Memory.poke(memAddress, 1030);
+        do Memory.poke(memAddress +32, 520);
+        do Memory.poke(memAddress +64, 6419);
+        do Memory.poke(memAddress +96, 1268);
+        do Memory.poke(memAddress +128, 924);
+        do Memory.poke(memAddress +160, 6661);
+        do Memory.poke(memAddress +192, 1542);
+        do Memory.poke(memAddress +224, 1026);
+        do Memory.poke(memAddress +256, 1026);
+        do Memory.poke(memAddress +288, 1542);
+        do Memory.poke(memAddress +320, 6661);
+        do Memory.poke(memAddress +352, 924);
+        do Memory.poke(memAddress +384, 1268);
+        do Memory.poke(memAddress +416, 6419);
+        do Memory.poke(memAddress +448, 520);
+        do Memory.poke(memAddress +480, 1030);
+        let animate = false;
         return;
     }
 
@@ -87,6 +119,10 @@ class Centipede {
         do Memory.poke(memAddress +288, 0);
         do Memory.poke(memAddress +320, 0);
         do Memory.poke(memAddress +352, 0);
+        do Memory.poke(memAddress +384, 0);
+        do Memory.poke(memAddress +416, 0);
+        do Memory.poke(memAddress +448, 0);
+        do Memory.poke(memAddress +480, 0);
         return;
     }
 
@@ -109,7 +145,11 @@ class Centipede {
                     let y = y + 20;
                 }
             }
-            do draw();
+            if (~animate) {
+                do draw1();
+            } else {
+                do draw2();
+            }
         }
         return;
     }
@@ -117,7 +157,7 @@ class Centipede {
     /** perform whatever is necessary in current state, gets called from programs mainloop **/
     method void run() {
         if (~isAlive) { return; }
-        if (~death) { // if active and not exploding, render floating animation
+        if (~death) {
             do move();
         }
         else { // otherwise if active and exploding, die

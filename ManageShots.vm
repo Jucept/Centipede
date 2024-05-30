@@ -1,5 +1,5 @@
 function ManageShots.new 0
-push constant 1
+push constant 2
 call Memory.alloc 1
 pop pointer 0
 call Shot.new 0
@@ -109,11 +109,67 @@ label IF_FALSE3
 label IF_FALSE2
 push constant 0
 return
+function ManageShots.isBlockDown 4
+push argument 0
+pop pointer 0
+push argument 1
+call Shot.getX 1
+pop local 0
+push argument 1
+call Shot.getY 1
+pop local 1
+push argument 2
+call Block.getX 1
+pop local 2
+push argument 2
+call Block.getY 1
+pop local 3
+push local 1
+push local 3
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push local 2
+push constant 18
+sub
+gt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 0
+push local 2
+push constant 18
+add
+lt
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+not
+return
+label IF_FALSE2
+label IF_FALSE1
+label IF_FALSE0
+push constant 0
+return
 function ManageShots.kill 0
 push argument 0
 pop pointer 0
 push argument 2
 call Centipede.die 1
+pop temp 0
+push argument 1
+call Shot.deactivate 1
+pop temp 0
+push constant 0
+return
+function ManageShots.destroy 0
+push argument 0
+pop pointer 0
+push argument 2
+call Block.deactivate 1
 pop temp 0
 push argument 1
 call Shot.deactivate 1
@@ -143,6 +199,24 @@ push pointer 0
 push this 0
 push argument 1
 call ManageShots.kill 3
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function ManageShots.handleOneBlockDown 0
+push argument 0
+pop pointer 0
+push pointer 0
+push this 0
+push argument 1
+call ManageShots.isBlockDown 3
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+push this 0
+push argument 1
+call ManageShots.destroy 3
 pop temp 0
 label IF_FALSE0
 push constant 0

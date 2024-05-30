@@ -79,14 +79,14 @@ class ManageCentipede {
 
     /** spawn enemies on screen **/
     method void activate() {
-        do part01.activate(35, 20);
-        do part02.activate(75, 20);
-        do part03.activate(115, 20);
-        do part04.activate(155, 20);
-        do part05.activate(195, 20);
-        do part06.activate(235, 20);
-        do part07.activate(275, 20);
-        do part08.activate(315, 20);
+        do part01.activate(30, 20);
+        do part02.activate(70, 20);
+        do part03.activate(110, 20);
+        do part04.activate(150, 20);
+        do part05.activate(190, 20);
+        do part06.activate(230, 20);
+        do part07.activate(270, 20);
+        do part08.activate(310, 20);
         return;
     }
 

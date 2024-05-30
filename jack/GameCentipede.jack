@@ -2,18 +2,37 @@ class GameCentipede {
     field Ship ship;
     field ManageShots shots;
     field ManageCentipede parts; // parts set
+    field Centipede centipede;
     field int direction; // the ship's current direction
     // 0=none, 3=left, 4=right
     field int skipTurnsBetweenShots; // counter that prevents from firing all shots all at once
     field int partFloatInterval; // counter that prevents enemies from moving too fast
+    field Array blocks; // Array to hold the blocks
+    field int sizeX, sizeY; // Limits for block placement
+    field Block block;
 
     constructor GameCentipede new() {
+        var int i;
+
+        do Random.setSeed(RandSeed.getSeed());
         // init ship's model in the middle of the bottom of the screen
         let ship = Ship.new(248, 230);
         let direction = 0;  // initial state is no movement
         let shots = ManageShots.new();
         let parts = ManageCentipede.new();
+        let sizeX = 510; // Example size, adjust as needed
+        let sizeY = 230; // Example size, adjust as needed
         do parts.activate();
+        
+        // Initialize blocks RANDOM
+        //let blocks = Array.new(15); // Example with 10 blocks
+        let i = 0;
+        while (i < 15) {
+            //let blocks[i] = block;
+            do block.placeBlock(sizeX, sizeY);
+            let i = i + 1;
+        }
+        
         return this;
     }
 
@@ -33,7 +52,6 @@ class GameCentipede {
         if (direction > 0) { let direction = 0; }
         return;
     }
-
 
     method void endGame(String text) {
         do Output.moveCursor(10, 30);
@@ -105,6 +123,3 @@ class GameCentipede {
         return;
     }
 }
-
-
-

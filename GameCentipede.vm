@@ -1,20 +1,46 @@
-function GameCentipede.new 0
-push constant 6
+function GameCentipede.new 1
+push constant 11
 call Memory.alloc 1
 pop pointer 0
+call RandSeed.getSeed 0
+call Random.setSeed 1
+pop temp 0
 push constant 248
 push constant 230
 call Ship.new 2
 pop this 0
 push constant 0
-pop this 3
+pop this 4
 call ManageShots.new 0
 pop this 1
 call ManageCentipede.new 0
 pop this 2
+push constant 510
+pop this 8
+push constant 230
+pop this 9
 push this 2
 call ManageCentipede.activate 1
 pop temp 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 15
+lt
+not
+if-goto WHILE_END0
+push this 10
+push this 8
+push this 9
+call Block.placeBlock 3
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
 push pointer 0
 return
 function GameCentipede.dispose 0
@@ -34,7 +60,7 @@ return
 function GameCentipede.moveship 0
 push argument 0
 pop pointer 0
-push this 3
+push this 4
 push constant 1
 eq
 if-goto IF_TRUE0
@@ -44,7 +70,7 @@ push this 0
 call Ship.moveUp 1
 pop temp 0
 label IF_FALSE0
-push this 3
+push this 4
 push constant 2
 eq
 if-goto IF_TRUE1
@@ -54,7 +80,7 @@ push this 0
 call Ship.moveDown 1
 pop temp 0
 label IF_FALSE1
-push this 3
+push this 4
 push constant 3
 eq
 if-goto IF_TRUE2
@@ -64,7 +90,7 @@ push this 0
 call Ship.moveLeft 1
 pop temp 0
 label IF_FALSE2
-push this 3
+push this 4
 push constant 4
 eq
 if-goto IF_TRUE3
@@ -74,14 +100,14 @@ push this 0
 call Ship.moveRight 1
 pop temp 0
 label IF_FALSE3
-push this 3
+push this 4
 push constant 0
 gt
 if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
 push constant 0
-pop this 3
+pop this 4
 label IF_FALSE4
 push constant 0
 return
@@ -125,17 +151,17 @@ eq
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 4
+push this 5
 push constant 40
 gt
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
 push constant 0
-pop this 4
+pop this 5
 goto IF_END2
 label IF_FALSE2
-push this 4
+push this 5
 push constant 0
 eq
 if-goto IF_TRUE3
@@ -151,10 +177,10 @@ sub
 call ManageShots.fire 3
 pop temp 0
 label IF_FALSE3
-push this 4
+push this 5
 push constant 1
 add
-pop this 4
+pop this 5
 label IF_END2
 label IF_FALSE1
 push local 0
@@ -164,7 +190,7 @@ if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
 push constant 1
-pop this 3
+pop this 4
 label IF_FALSE4
 push local 0
 push constant 133
@@ -173,7 +199,7 @@ if-goto IF_TRUE5
 goto IF_FALSE5
 label IF_TRUE5
 push constant 2
-pop this 3
+pop this 4
 label IF_FALSE5
 push local 0
 push constant 130
@@ -182,7 +208,7 @@ if-goto IF_TRUE6
 goto IF_FALSE6
 label IF_TRUE6
 push constant 3
-pop this 3
+pop this 4
 label IF_FALSE6
 push local 0
 push constant 132
@@ -191,19 +217,19 @@ if-goto IF_TRUE7
 goto IF_FALSE7
 label IF_TRUE7
 push constant 4
-pop this 3
+pop this 4
 label IF_FALSE7
-push this 5
+push this 6
 push constant 50
 gt
 if-goto IF_TRUE8
 goto IF_FALSE8
 label IF_TRUE8
 push constant 0
-pop this 5
+pop this 6
 goto IF_END8
 label IF_FALSE8
-push this 5
+push this 6
 push constant 0
 eq
 if-goto IF_TRUE9
@@ -213,10 +239,10 @@ push this 2
 call ManageCentipede.run 1
 pop temp 0
 label IF_FALSE9
-push this 5
+push this 6
 push constant 1
 add
-pop this 5
+pop this 6
 label IF_END8
 push pointer 0
 call GameCentipede.moveship 1

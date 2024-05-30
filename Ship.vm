@@ -43,55 +43,91 @@ call Math.multiply 2
 add
 pop local 0
 push local 0
-push constant 32
+push constant 128
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 32
 add
-push constant 112
+push constant 128
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 64
 add
-push constant 80
+push constant 128
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 96
 add
-push constant 1105
+push constant 448
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 128
 add
-push constant 1651
+push constant 320
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 160
 add
-push constant 1533
+push constant 320
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 192
 add
-push constant 1533
+push constant 320
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 224
 add
-push constant 1911
+push constant 21349
 call Memory.poke 2
 pop temp 0
 push local 0
 push constant 256
 add
-push constant 546
+push constant 21029
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 21029
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 29223
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 25123
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 29719
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 31727
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 23577
 call Memory.poke 2
 pop temp 0
 push constant 0
@@ -161,6 +197,42 @@ add
 push constant 0
 call Memory.poke 2
 pop temp 0
+push local 0
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
 push constant 0
 return
 function Ship.moveLeft 0
@@ -211,7 +283,7 @@ function Ship.moveDown 0
 push argument 0
 pop pointer 0
 push this 1
-push constant 245
+push constant 240
 lt
 if-goto IF_TRUE0
 goto IF_FALSE0

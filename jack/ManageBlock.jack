@@ -1,0 +1,88 @@
+/*
+ManageBlock - a collection of block ships with some helpful functions.
+ */
+class ManageBlock {
+    /* pool of block ships */
+    field Block block01;
+    field Block block02;
+    field Block block03;
+    field Block block04;
+    field Block block05;
+    field Block block06;
+    field Block block07;
+    field Block block08;
+
+    constructor ManageBlock new() {
+        let block01 = Block.new();
+        let block02 = Block.new();
+        let block03 = Block.new();
+        let block04 = Block.new();
+        let block05 = Block.new();
+        let block06 = Block.new();
+        let block07 = Block.new();
+        let block08 = Block.new();
+        return this;
+    }
+
+    /** try to find collisions with bullets for each block ship **/
+    method void checkIfHit(ManageShots bs) {
+        do bs.handleOneBlockDown(block01);
+        do bs.handleOneBlockDown(block02);
+        do bs.handleOneBlockDown(block03);
+        do bs.handleOneBlockDown(block04);
+        do bs.handleOneBlockDown(block05);
+        do bs.handleOneBlockDown(block06);
+        do bs.handleOneBlockDown(block07);
+        do bs.handleOneBlockDown(block08);
+        return;
+    }
+
+        // selects a position for and draws a food pellet
+    method void placeBlock(int sizeX, int sizeY) {
+        
+        do activate(100, 200);
+        return;
+    }
+
+    /** spawn enemies on screen **/
+    method void activate(int sizeX, int sizeY) {
+        var int randX, randY;
+        let randX = Random.randRange(sizeX);
+        let randY = Random.randRange(sizeY);
+        do block01.activate(randX, randY);
+        do block02.activate(randX, randY);
+        do block03.activate(randX, randY);
+        do block04.activate(randX, randY);
+        do block05.activate(randX, randY);
+        do block06.activate(randX, randY);
+        do block07.activate(randX, randY);
+        do block08.activate(randX, randY);
+        return;
+    }
+
+    method void dispose() {
+        do block01.dispose();
+        do block02.dispose();
+        do block03.dispose();
+        do block04.dispose();
+        do block05.dispose();
+        do block06.dispose();
+        do block07.dispose();
+        do block08.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** called from mainloop, does whatever is necessary for block ships in current state **/
+    method void run() {
+        do block01.run();
+        do block02.run();
+        do block03.run();
+        do block04.run();
+        do block05.run();
+        do block06.run();
+        do block07.run();
+        do block08.run();
+        return;
+    }
+}

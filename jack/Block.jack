@@ -11,23 +11,29 @@ class Block {
         return this;
     }
 
-    /** Activate the block at given coordinates **/
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
     method void activate(int Ax, int Ay) {
         let x = Ax;
         let y = Ay;
         let isVisible = true;
-        do draw(x, y);
+        do draw();
         return;
     }
 
     /** Deactivate the block **/
-    method void deactivate(int Ax, int Ay) {
-        let x = Ax;
-        let y = Ay;
+    method void deactivate() {
         let isVisible = false;
-        do erase(x, y);
+        do erase();
         return;
     }
+
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method boolean isVisible() { return isVisible; }
 
     /** Draw the block **/
     method void draw(int x, int y) {
@@ -50,7 +56,7 @@ class Block {
     }
 
     /** Erase the block **/
-    method void erase(int x, int y) {
+    method void erase() {
 
         var int memAddress;
         let memAddress = 16384 + (x / 16) + (y * 32);
@@ -70,4 +76,28 @@ class Block {
         return;
     }
 
+    method void checkIfHit(ManageShots bs) {
+        do bs.handleOneBlockDown(Block.new());
+        return;
+    }
+
+    // selects a position for and draws a food pellet
+    method void placeBlock(int sizeX, int sizeY) {
+        var int randX, randY;
+        let randX = Random.randRange(sizeX);
+        let randY = Random.randRange(sizeY);
+        do draw(randX, randY);
+        return;
+    }
+
+    method boolean checkBlock(int Bx, int By) {
+        if( Bx = x ) {
+            if( By = y ) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
 }

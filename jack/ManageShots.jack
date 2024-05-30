@@ -20,6 +20,7 @@ with every enemy ship.
  */
 class ManageShots {
     field Shot shot01;
+    field Block block;
 
     constructor ManageShots new() {
         let shot01 = Shot.new();
@@ -38,6 +39,7 @@ class ManageShots {
            also checks for collisions */
         do shot01.run();
         do handlePartDown(e);
+    //    do handleOneBlockDown(block);
         return;
     }
 
@@ -71,10 +73,33 @@ class ManageShots {
         return false;
     }
 
+    method boolean isBlockDown(Shot s, Block b) {
+        var int sx, sy, bx, by;
+        let sx = s.getX();
+        let sy = s.getY();
+        let bx = b.getX();
+        let by = b.getY();
+        if (sy < by) { // shot is higher than enemy
+            // x coord of a shot and enemy overlaps
+            if (sx > (bx - 18)) {
+                if (sx < (bx + 18)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /** kill an enemy ship with a shot **/
     method void kill(Shot b, Centipede e) {
-        do e.die(); // start explosion animation, mark enemy as inactive, etc
+        do e.die(); // Creates block
         do b.deactivate(); // disable shot, its job is done
+        return;
+    }
+
+    method void destroy(Shot s, Block b) {
+        do b.deactivate(); // Destroys Block
+        do s.deactivate(); // disable shot, its job is done
         return;
     }
 
@@ -84,10 +109,22 @@ class ManageShots {
         return;
     }
 
+    // method void handleBlockDown(Block block) {
+    //     do block.checkIfHit(this);
+    //     return;
+    // }
+
     /** checks one enemy ship for collision with all Shot **/
     method void handleOnePartDown(Centipede part) {
         if (isPartDown(shot01, part)) {
             do kill(shot01, part);
+        } 
+        return;
+    }
+
+    method void handleOneBlockDown(Block block) {
+        if (isBlockDown(shot01, block)) {
+            do destroy(shot01, block);
         } 
         return;
     }
